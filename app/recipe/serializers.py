@@ -9,6 +9,7 @@ from core.models import (
     Ingredient,
 )
 
+
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for ingredients."""
 
@@ -18,7 +19,6 @@ class IngredientSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
-
 class TagSerializer(serializers.ModelSerializer):
     """Serializer for tags."""
 
@@ -26,8 +26,6 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ['id', 'name']
         read_only_fields = ['id']
-
-
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -68,7 +66,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags = validated_data.pop('tags', [])
         ingredients = validated_data.pop('ingredients', [])
         recipe = Recipe.objects.create(**validated_data)
-        auth_user = self.context['request'].user
+
         self._get_or_create_tags(tags, recipe)
         self._get_or_create_ingredients(ingredients, recipe)
 
@@ -90,6 +88,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
 
 class RecipeImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to recipes."""
